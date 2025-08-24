@@ -1,0 +1,200 @@
+<div class="container mt-5">
+  <h2 class="text-center mt-4 text-white">Reserva de Turnos de Recepción</h2>
+
+  <!-- Formulario de reserva -->
+  <form [formGroup]="reservaForm" (ngSubmit)="onSubmit()" class="col-6 mx-auto card p-3 shadow-lg custom-form">
+
+    <!-- Fecha -->
+    <div class="mb-3">
+      <label for="fecha" class="form-label text-white">Fecha</label>
+      <input id="fecha" type="date" class="form-control" formControlName="fecha" required>
+    </div>
+
+    <!-- Hora de agendamiento -->
+    <div class="mb-3">
+      <label for="horaInicioAgendamiento" class="form-label text-white">Hora Inicio Agendamiento</label>
+      <select id="horaInicioAgendamiento" class="form-control" formControlName="horaInicioAgendamiento" required>
+        <option *ngFor="let hora of horasDisponibles" [value]="hora">{{hora}}</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="horaFinAgendamiento" class="form-label text-white">Hora Fin Agendamiento</label>
+      <select id="horaFinAgendamiento" class="form-control" formControlName="horaFinAgendamiento" required>
+        <option *ngFor="let hora of horasDisponibles" [value]="hora">{{hora}}</option>
+      </select>
+    </div>
+
+    <!-- Proveedor -->
+    <div class="mb-3">
+      <label for="idProveedor" class="form-label text-white">Proveedor</label>
+      <select id="idProveedor" class="form-control" formControlName="idProveedor" required>
+        <option *ngFor="let proveedor of proveedores" [value]="proveedor.id">{{proveedor.nombre}}</option>
+      </select>
+    </div>
+
+    <!-- Jaula -->
+    <div class="mb-3">
+      <label for="idJaula" class="form-label text-white">Jaula</label>
+      <select id="idJaula" class="form-control" formControlName="idJaula" required>
+        <option *ngFor="let jaula of jaulas" [value]="jaula.idJaula">{{ jaula.nombre }}</option>
+      </select>
+    </div>
+
+    <!-- Detalles dinámicos -->
+    <div formArrayName="detalles_res">
+      <div *ngFor="let detalle of detalles_res.controls; let i = index" [formGroupName]="i" class="mb-3 border p-2 rounded custom-detail-section">
+        <label for="producto{{i}}" class="form-label text-white">Producto:</label>
+        <select id="producto{{i}}" formControlName="idProducto" class="form-select mb-2" required>
+          <option *ngFor="let producto of productos" [value]="producto.idProducto">{{ producto.nombre }}</option>
+        </select>
+
+        <label for="cantidad{{i}}" class="form-label text-white">Cantidad:</label>
+        <input id="cantidad{{i}}" type="number" formControlName="cantidad" class="form-control" required>
+
+        <button type="button" (click)="eliminarDetalle(i)" class="btn btn-danger mt-2">Eliminar</button>
+      </div>
+    </div>
+
+    <!-- Botón para agregar detalle -->
+    <button type="button" (click)="agregarDetalle()" class="btn btn-secondary mb-3 w-100">Agregar Producto</button>
+
+    <!-- Botón para guardar reserva -->
+    <button type="submit" class="btn btn-primary w-100">Guardar Reserva</button>
+
+  </form>
+</div>
+
+
+
+
+
+
+<!--
+<div class="container">
+  <h2>Reserva de Turnos de Recepción</h2>
+
+  
+  <input type="text" placeholder="Buscar por fecha o proveedor" [(ngModel)]="filtroNombre" class="input-search" />
+
+  
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Fecha</th>
+        <th>Hora Inicio</th>
+        <th>Hora Fin</th>
+        <th>Proveedor</th>
+        <th>Jaula</th>
+        <th>Detalle</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let t of turnos">
+        <td>{{ t.idTurno }}</td>
+
+
+        <td>
+          <ng-container *ngIf="editandoId !== t.idTurno; else editFecha">{{ t.fecha }}</ng-container>
+          <ng-template #editFecha>
+            <input type="date" [(ngModel)]="t.fecha" />
+          </ng-template>
+        </td>
+
+
+        <td>
+          <ng-container *ngIf="editandoId !== t.idTurno; else editInicio">{{ t.horaInicioAgendamiento }}</ng-container>
+          <ng-template #editInicio>
+            <select [(ngModel)]="t.horaInicioAgendamiento">
+              <option *ngFor="let h of horas" [value]="h">{{ h }}</option>
+            </select>
+          </ng-template>
+        </td>
+
+
+        <td>
+          <ng-container *ngIf="editandoId !== t.idTurno; else editFin">{{ t.horaFinAgendamiento }}</ng-container>
+          <ng-template #editFin>
+            <select [(ngModel)]="t.horaFinAgendamiento">
+              <option *ngFor="let h of horas" [value]="h">{{ h }}</option>
+            </select>
+          </ng-template>
+        </td>
+
+
+        <td>
+          <ng-container *ngIf="editandoId !== t.idTurno; else editProveedor">
+            {{ getNombreProveedor(t.idProveedor) }}
+          </ng-container>
+          <ng-template #editProveedor>
+            <select [(ngModel)]="t.idProveedor">
+              <option *ngFor="let p of proveedores" [value]="p.idProveedor">{{ p.nombre }}</option>
+            </select>
+          </ng-template>
+        </td>
+
+
+        <td>
+          <ng-container *ngIf="editandoId !== t.idTurno; else editJaula">
+            {{ getNombreJaula(t.idJaula) }}
+          </ng-container>
+          <ng-template #editJaula>
+            <select [(ngModel)]="t.idJaula">
+              <option *ngFor="let j of jaulas" [value]="j.idJaula">{{ j.nombre }}</option>
+            </select>
+          </ng-template>
+        </td>
+
+   
+        <td>
+          <div *ngFor="let d of t.detalle">
+            {{ getNombreProducto(d.idProducto) }}
+            <input type="number" [(ngModel)]="d.cantidad" min="1" />
+            <button (click)="eliminarDetalle(t, d.idProducto)">X</button>
+          </div>
+          <div>
+            <select #prodSelect>
+              <option *ngFor="let p of productos" [value]="p.idProducto">{{ p.nombre }}</option>
+            </select>
+            <input type="number" #cantInput min="1" placeholder="Cantidad" />
+            <button (click)="agregarDetalle(t, +prodSelect.value, +cantInput.value)">Agregar</button>
+          </div>
+        </td>
+
+ 
+        <td>
+          <ng-container *ngIf="editandoId !== t.idTurno; else editButtons">
+            <button (click)="iniciarEdicion(t)">Editar</button>
+            <button (click)="eliminarReserva(t.idTurno)">Eliminar</button>
+          </ng-container>
+          <ng-template #editButtons>
+            <button (click)="guardarEdicion(t)">Guardar</button>
+            <button (click)="cancelarEdicion()">Cancelar</button>
+          </ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <h3>Agregar Nueva Reserva</h3>
+  <div class="add-form">
+    <input type="date" [(ngModel)]="nuevaReserva.fecha" />
+    <select [(ngModel)]="nuevaReserva.horaInicioAgendamiento">
+      <option *ngFor="let h of horas" [value]="h">{{ h }}</option>
+    </select>
+    <select [(ngModel)]="nuevaReserva.horaFinAgendamiento">
+      <option *ngFor="let h of horas" [value]="h">{{ h }}</option>
+    </select>
+    <select [(ngModel)]="nuevaReserva.idProveedor">
+      <option *ngFor="let p of proveedores" [value]="p.idProveedor">{{ p.nombre }}</option>
+    </select>
+    <select [(ngModel)]="nuevaReserva.idJaula">
+      <option *ngFor="let j of jaulas" [value]="j.idJaula">{{ j.nombre }}</option>
+    </select>
+    <button (click)="agregarReserva()">Agregar Reserva</button>
+  </div>
+</div>
+-->

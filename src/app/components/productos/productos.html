@@ -1,0 +1,55 @@
+<div class="container">
+  <h2>Administración de Productos</h2>
+
+  <!-- Buscador -->
+  <input 
+    type="text" 
+    [(ngModel)]="searchTerm" 
+    placeholder="Buscar producto por nombre" 
+    class="input-search"
+  />
+
+  <!-- Formulario agregar -->
+  <div class="add-form">
+    <input 
+      type="text" 
+      [(ngModel)]="nuevoProducto" 
+      placeholder="Nombre del nuevo producto"
+    />
+    <button (click)="agregarProducto()">Agregar</button>
+  </div>
+
+  <!-- Tabla -->
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of productosFiltrados">
+        <td>{{ p.idProducto }}</td>
+        <td>
+          <ng-container *ngIf="editando !== p.idProducto; else editMode">
+            {{ p.nombre }}
+          </ng-container>
+          <ng-template #editMode>
+            <input [(ngModel)]="nombreEditado" />
+          </ng-template>
+        </td>
+        <td>
+          <ng-container *ngIf="editando !== p.idProducto; else buttonsEdit">
+            <button (click)="iniciarEdicion(p)">Editar</button>
+            <button (click)="eliminarProducto(p.idProducto)">Eliminar</button>
+          </ng-container>
+          <ng-template #buttonsEdit>
+            <button (click)="guardarEdicion(p.idProducto)">Guardar</button>
+            <button (click)="cancelarEdicion()">Cancelar</button>
+          </ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

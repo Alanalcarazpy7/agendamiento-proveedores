@@ -1,0 +1,55 @@
+<div class="container">
+  <h2>Administración de Proveedores</h2>
+
+  <!-- Buscador -->
+  <input 
+    type="text" 
+    [(ngModel)]="searchTerm" 
+    placeholder="Buscar proveedor por nombre" 
+    class="input-search"
+  />
+
+  <!-- Formulario agregar -->
+  <div class="add-form">
+    <input 
+      type="text" 
+      [(ngModel)]="nuevoProveedor" 
+      placeholder="Nombre del nuevo proveedor"
+    />
+    <button (click)="agregarProveedor()">Agregar</button>
+  </div>
+
+  <!-- Tabla -->
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of proveedoresFiltrados">
+        <td>{{ p.idProveedor }}</td>
+        <td>
+          <ng-container *ngIf="editando !== p.idProveedor; else editMode">
+            {{ p.nombre }}
+          </ng-container>
+          <ng-template #editMode>
+            <input [(ngModel)]="nombreEditado" />
+          </ng-template>
+        </td>
+        <td>
+          <ng-container *ngIf="editando !== p.idProveedor; else buttonsEdit">
+            <button (click)="iniciarEdicion(p)">Editar</button>
+            <button (click)="eliminarProveedor(p.idProveedor)">Eliminar</button>
+          </ng-container>
+          <ng-template #buttonsEdit>
+            <button (click)="guardarEdicion(p.idProveedor)">Guardar</button>
+            <button (click)="cancelarEdicion()">Cancelar</button>
+          </ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,52 @@
+<div class="container mt-5">
+  <h2 class="text-center text-white mb-4">Turnos Agendados</h2>
+
+  <div class="mb-3">
+    <label class="form-label text-white">Seleccionar fecha:</label>
+    <input type="date" [(ngModel)]="fechaSeleccionada" class="form-control col-3" />
+  </div>
+
+  <table class="table table-striped text-white">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Hora Inicio</th>
+        <th>Hora Fin</th>
+        <th>Proveedor</th>
+        <th>Jaula</th>
+        <th>Hora Inicio Recepción</th>
+        <th>Hora Fin Recepción</th>
+        <th>Productos</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let t of turnosFiltrados">
+        <td>{{ t.idTurno }}</td>
+        <td>{{ t.horaInicioAgendamiento }}</td>
+        <td>{{ t.horaFinAgendamiento }}</td>
+        <td>{{ t.idProveedor }}</td>
+        <td>{{ getNombreJaula(t) }}</td>
+        <td>{{ t.horaInicioRecepcion || '-' }}</td>
+        <td>{{ t.horaFinRecepcion || '-' }}</td>
+        <td>
+          <ul>
+            <li *ngFor="let p of t.detalles_res">{{ p.nombre }} ({{ p.cantidad }})</li>
+          </ul>
+        </td>
+        <td>
+          <button *ngIf="!t.horaInicioRecepcion" class="btn btn-success btn-sm" (click)="iniciarRecepcion(t)">Iniciar</button>
+          <button *ngIf="t.horaInicioRecepcion && !t.horaFinRecepcion" class="btn btn-primary btn-sm" (click)="finalizarRecepcion(t)">Finalizar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="turnoSeleccionado" class="card p-3 mt-3 bg-dark text-white">
+    <h5>Seleccione jaula para turno {{ turnoSeleccionado.idTurno }}</h5>
+    <select [(ngModel)]="jaulaElegidaId" class="form-select col-3 mb-2">
+      <option *ngFor="let j of jaulasDisponibles" [value]="j.idJaula">{{ j.nombre }}</option>
+    </select>
+    <button (click)="confirmarInicioRecepcion()" [disabled]="!jaulaElegidaId" class="btn btn-success">Confirmar Inicio</button>
+  </div>
+</div>

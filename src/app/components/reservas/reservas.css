@@ -1,0 +1,68 @@
+/* Fondo de toda la página */
+body {
+  background-color: #f8f9fa; /* gris muy claro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* ocupa toda la pantalla */
+  margin: 0;
+}
+
+/* Contenedor del formulario */
+.custom-form {
+  background-color: #fff; /* blanco */
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  padding: 30px;
+  width: 500px;   /* ancho fijo */
+  height: 500px;  /* alto fijo (mismo que ancho) */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Título */
+.custom-form h2 {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Inputs y selects */
+.custom-form .form-control,
+.custom-form .form-select {
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.custom-form .form-control:focus,
+.custom-form .form-select:focus {
+  border-color: #2a9d8f;
+  box-shadow: 0 0 5px rgba(42,157,143,0.4);
+}
+
+/* Botones */
+.custom-form .btn {
+  border-radius: 10px;
+  font-weight: bold;
+  padding: 10px;
+}
+
+.custom-form .btn-primary {
+  background-color: #2a9d8f;
+  border: none;
+}
+
+.custom-form .btn-primary:hover {
+  background-color: #23827c;
+}
+
+.custom-form .btn-secondary {
+  background-color: #6c757d;
+  border: none;
+}
+
+.custom-form .btn-secondary:hover {
+  background-color: #5a6268;
+}

@@ -1,0 +1,61 @@
+<div class="container">
+  <h2>Administración de Jaulas</h2>
+
+  <!-- Filtro -->
+  <input type="text" placeholder="Buscar por nombre" [(ngModel)]="filtroNombre" class="input-search" />
+
+  <!-- Listado -->
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>En Uso</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let j of jaulasFiltradas">
+        <td>{{ j.idJaula }}</td>
+        <td>
+          <ng-container *ngIf="editandoId !== j.idJaula; else editNombre">
+            {{ j.nombre }}
+          </ng-container>
+          <ng-template #editNombre>
+            <input [(ngModel)]="nombreEditado" />
+          </ng-template>
+        </td>
+        <td>
+          <ng-container *ngIf="editandoId !== j.idJaula; else editEnUso">
+            {{ j.enUso }}
+          </ng-container>
+          <ng-template #editEnUso>
+            <select [(ngModel)]="enUsoEditado">
+              <option value="S">Sí</option>
+              <option value="N">No</option>
+            </select>
+          </ng-template>
+        </td>
+        <td>
+          <ng-container *ngIf="editandoId !== j.idJaula; else botonesEdicion">
+            <button (click)="iniciarEdicion(j)">Editar</button>
+            <button (click)="eliminar(j.idJaula)">Eliminar</button>
+          </ng-container>
+          <ng-template #botonesEdicion>
+            <button (click)="guardarEdicion(j.idJaula)">Guardar</button>
+            <button (click)="cancelarEdicion()">Cancelar</button>
+          </ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Alta de jaula -->
+  <h3>Agregar Jaula</h3>
+  <input type="text" placeholder="Nombre" [(ngModel)]="nuevaJaula.nombre" />
+  <select [(ngModel)]="nuevaJaula.enUso">
+    <option value="S">Sí</option>
+    <option value="N">No</option>
+  </select>
+  <button (click)="agregar()">Agregar</button>
+</div>
