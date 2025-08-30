@@ -40,12 +40,8 @@ table th {
   color: #fff;
 }
 
-table tr:nth-child(even) {
-  background-color: #2a2a2a;
-}
-
 table tr:hover {
-  background-color: #3a3a3a;
+  background-color: #cacaca;
 }
 
 /* Botones */
@@ -101,4 +97,90 @@ td ul {
 /* Resaltar fila en edición o selección */
 tr.selected {
   background-color: #444 !important;
+}
+
+
+.form-label {
+  font-weight: bold;
+  margin-right: 10px;
+  }
+
+  .mb-3
+  {
+    margin-bottom: 1rem !important;
+  }
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  border: 1px solid #e0e0e0;
+}
+
+.modal-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f9fa;
+  border-radius: 12px 12px 0 0;
+}
+
+.modal-body {
+  padding: 1.5rem;
+  background-color: #ffffff;
+}
+
+.modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: flex-end;
+  background-color: #f8f9fa;
+  border-radius: 0 0 12px 12px;
+}
+
+.btn-close-white {
+  background: none;
+  border: none;
+  color: #6c757d;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.btn-close-white:hover {
+  color: #495057;
+  background-color: #f1f3f4;
+}
+
+button.btn-info {
+  background-color: #17a2b8;
+  color: white;
+  transition: background-color 0.2s ease;
+}
+
+button.btn-info:hover {
+  background-color: #138496;
 }

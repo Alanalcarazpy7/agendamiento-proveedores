@@ -7,7 +7,24 @@ body {
   height: 100vh; /* ocupa toda la pantalla */
   margin: 0;
 }
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.text-reserva{
+  color: rgb(0, 0, 0);
+  text-align: center;
+  margin-top: 20px;
+  font-weight: bold;
+} 
 
+.form-label {
+  margin: 10px;
+  font-weight: bold;
+  color: #333;
+}
 /* Contenedor del formulario */
 .custom-form {
   background-color: #fff; /* blanco */

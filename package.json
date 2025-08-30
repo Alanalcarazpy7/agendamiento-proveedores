@@ -1,6 +1,9 @@
 {
   "name": "agendamiento-proveedores",
   "version": "0.0.0",
+  "styles": [
+  "src/app/app.css"
+    ],
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -43,4 +46,6 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.8.2"
   }
+  
 }
+

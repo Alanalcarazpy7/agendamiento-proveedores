@@ -8,6 +8,7 @@ export default interface turno {
   jaulaId?: number;                    // Jaula asignada durante recepción
   horaInicioRecepcion?: string;        // HH:mm
   horaFinRecepcion?: string;           // HH:mm
+  estado:string;
   detalles_res: { idProducto: number; cantidad: number; nombre: string }[];
 }
 

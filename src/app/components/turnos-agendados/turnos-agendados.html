@@ -13,11 +13,13 @@
         <th>Hora Inicio</th>
         <th>Hora Fin</th>
         <th>Proveedor</th>
+        <th>Estado</th> 
         <th>Jaula</th>
         <th>Hora Inicio Recepción</th>
         <th>Hora Fin Recepción</th>
         <th>Productos</th>
         <th>Acciones</th>
+        <th>detalles</th>
       </tr>
     </thead>
     <tbody>
@@ -25,18 +27,44 @@
         <td>{{ t.idTurno }}</td>
         <td>{{ t.horaInicioAgendamiento }}</td>
         <td>{{ t.horaFinAgendamiento }}</td>
-        <td>{{ t.idProveedor }}</td>
+        <td>{{ getNombreProveedor(t.idProveedor) }}</td>
+        <td>
+          <span class="badge" 
+                [ngClass]="{
+                  'bg-warning': t.estado === 'pendiente',
+                  'bg-info': t.estado === 'en recepcion', 
+                  'bg-success': t.estado === 'completado'
+                }">
+            {{ t.estado }}
+          </span>
+        </td>
         <td>{{ getNombreJaula(t) }}</td>
         <td>{{ t.horaInicioRecepcion || '-' }}</td>
         <td>{{ t.horaFinRecepcion || '-' }}</td>
         <td>
           <ul>
+            <!-- Ahora usa p.nombre directamente -->
             <li *ngFor="let p of t.detalles_res">{{ p.nombre }} ({{ p.cantidad }})</li>
           </ul>
         </td>
         <td>
-          <button *ngIf="!t.horaInicioRecepcion" class="btn btn-success btn-sm" (click)="iniciarRecepcion(t)">Iniciar</button>
-          <button *ngIf="t.horaInicioRecepcion && !t.horaFinRecepcion" class="btn btn-primary btn-sm" (click)="finalizarRecepcion(t)">Finalizar</button>
+          <button *ngIf="t.estado === 'pendiente'" 
+                  class="btn btn-success btn-sm" 
+                  (click)="iniciarRecepcion(t)">
+            Iniciar Recepción
+          </button>
+          <button *ngIf="t.estado === 'en recepcion'" 
+                  class="btn btn-primary btn-sm" 
+                  (click)="finalizarRecepcion(t)">
+            Finalizar Recepción
+          </button>
+          <span *ngIf="t.estado === 'completado'" class="text-success">
+            ✓ Completado
+          </span>
+        </td>
+        <td>
+          <button class="btn btn-info btn-sm" (click)="verDetalles(t)">Ver Detalles</button>
+
         </td>
       </tr>
     </tbody>
@@ -48,5 +76,42 @@
       <option *ngFor="let j of jaulasDisponibles" [value]="j.idJaula">{{ j.nombre }}</option>
     </select>
     <button (click)="confirmarInicioRecepcion()" [disabled]="!jaulaElegidaId" class="btn btn-success">Confirmar Inicio</button>
+  </div>
+</div>
+
+<div *ngIf="mostrarPopupDetalles" class="modal-overlay" (click)="cerrarPopupDetalles()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="modal-title text-dark">Productos</h5>
+      <button type="button" class="btn-close btn-close-white" (click)="cerrarPopupDetalles()">×</button>
+    </div>
+    <div class="modal-body">
+      <div *ngIf="turnoDetalles">
+        <h6 class="text-dark mb-3">Turno {{ turnoDetalles.idTurno }} - {{ getNombreProveedor(turnoDetalles.idProveedor) }}</h6>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th style="background-color: #f8f9fa; color: #333;">Producto</th>
+                <th style="background-color: #f8f9fa; color: #333;">Cantidad</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let detalle of turnoDetalles.detalles_res">
+                <td style="color: #333;">{{ detalle.nombre || getNombreProducto(detalle.idProducto) }}</td>
+                <td style="color: #333;">{{ detalle.cantidad }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="!turnoDetalles.detalles_res || turnoDetalles.detalles_res.length === 0" 
+             class="text-center" style="color: #6c757d;">
+          No hay productos registrados para este turno
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="cerrarPopupDetalles()">Cerrar</button>
+    </div>
   </div>
 </div>
