@@ -65,7 +65,7 @@ export class TurnosAgendados {
   // -------------------- Actualizar estructura de datos --------------------
   actualizarEstructuraReservas() {
     let datosActualizados = false;
-    
+
     this.turnos = this.turnos.map(turno => {
       // Agregar campos faltantes si no existen
       if (!turno.estado) {
@@ -80,7 +80,7 @@ export class TurnosAgendados {
         (turno as any).horaFinRecepcion = null;
         datosActualizados = true;
       }
-      
+
       // Actualizar detalles_res para incluir nombres de productos
       if (turno.detalles_res) {
         turno.detalles_res = turno.detalles_res.map((detalle: any) => {
@@ -92,10 +92,10 @@ export class TurnosAgendados {
           return detalle;
         });
       }
-      
+
       return turno;
     });
-    
+
     if (datosActualizados) {
       this.guardarTurnos();
     }
@@ -123,9 +123,15 @@ export class TurnosAgendados {
     return p ? p.nombre : `Producto ${idProducto}`;
   }
 
-  getNombreProveedor(idProveedor: number): string {
-    const prov = this.proveedores.find(p => p.idProveedor === idProveedor);
+  getNombreProveedor(idProveedor: any): string {
+    console.log('idProveedor', idProveedor);
+    console.log(this.proveedores);
+    const prov = this.proveedores.find(
+      (p) => p.idProveedor === Number(idProveedor)
+    );
+    console.log("prov",prov);
     return prov ? prov.nombre : `Proveedor ${idProveedor}`;
+
   }
 
   getNombreJaula(turno: Turno): string {
@@ -143,7 +149,7 @@ export class TurnosAgendados {
   }
 confirmarInicioRecepcion() {
     console.log('Confirmando inicio...', this.turnoSeleccionado, this.jaulaElegidaId);
-    
+
     if (!this.turnoSeleccionado || !this.jaulaElegidaId) {
       console.log('Faltan datos para confirmar');
       return;
@@ -174,7 +180,7 @@ confirmarInicioRecepcion() {
     // Limpiar selección
     this.turnoSeleccionado = undefined;
     this.jaulaElegidaId = undefined;
-    
+
     console.log('Recepción iniciada correctamente');
   }
 

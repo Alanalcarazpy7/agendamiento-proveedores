@@ -1,50 +1,99 @@
-
-
-body, html {
-  margin: 0 !important;
-  padding: 0;
-  font-family: Arial, Helvetica, sans-serif;
+/* Navbar plano mejorado */
+.navbar-flat {
+  background-color: #2563eb;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  width: 100%;
+  position: relative;
+  z-index: 10;
 }
 
-.navbar {
-background: #2c3e50;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-around;
-    height: 40px;
-    align-items: center;
-}
-
-
-
-.navbar ul {
-  list-style: none;
+.navbar-container {
+  max-width: 1200px;
+  margin: auto;
   display: flex;
-  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  flex-wrap: wrap;
+}
+
+/* Logo */
+.navbar-logo span {
+  color: white;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+/* Links */
+.navbar-links {
+  display: flex;
+  gap: 12px;
+  list-style: none;
   margin: 0;
-  justify-items: space-evenly;
-  
-}
-.navbar a:hover {
-  color: #76bbff;;
+  padding: 0;
 }
 
-.navbar li {
-  display: inline;
-}
-
-.navbar a {
-  color: #ecf0f1;
+.navbar-links li a {
+  color: white;
   text-decoration: none;
-  font-weight: bold;
-  font-family: Arial, Helvetica, sans-serif;
-  
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
 }
 
-.navbar a.active {
-  border-bottom: 2px solid #1abc9c;
+/* Hover */
+.navbar-links li a:hover {
+  background-color: rgba(255,255,255,0.2);
+  transform: translateY(-2px);
 }
 
+/* Active */
+.navbar-links li a.active-link {
+  background-color: #17a2b8;
+  color: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transform: translateY(-2px);
+}
+
+/* Botón hamburguesa para móvil */
+.navbar-toggle {
+  display: none;
+  background-color: transparent;
+  color: white;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+/* Contenido principal */
 .content {
   padding: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar-links {
+    flex-direction: column;
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    margin-top: 10px;
+    background-color: #2563eb;
+    transition: max-height 0.3s ease;
+  }
+
+  .navbar-links.show {
+    max-height: 500px;
+  }
+
+  .navbar-toggle {
+    display: block;
+  }
+
+  .navbar-links li a {
+    text-align: center;
+    width: 100%;
+    padding: 12px 0;
+  }
 }

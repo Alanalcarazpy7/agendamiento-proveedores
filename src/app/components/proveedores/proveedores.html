@@ -1,55 +1,56 @@
-<div class="container">
-  <h2>Administración de Proveedores</h2>
+<div class="container-proveedores">
+
+  <h2>Gestión de Proveedores</h2>
 
   <!-- Buscador -->
-  <input 
-    type="text" 
-    [(ngModel)]="searchTerm" 
-    placeholder="Buscar proveedor por nombre" 
-    class="input-search"
-  />
+  <div class="search-container">
+    <input type="text" placeholder="Buscar proveedor..." [(ngModel)]="searchTerm" />
+  </div>
 
-  <!-- Formulario agregar -->
-  <div class="add-form">
-    <input 
-      type="text" 
-      [(ngModel)]="nuevoProveedor" 
-      placeholder="Nombre del nuevo proveedor"
-    />
+  <!-- Formulario agregar proveedor -->
+  <div class="card add-card">
+    <input type="text" placeholder="Nombre del nuevo proveedor" [(ngModel)]="nuevoProveedor" />
     <button (click)="agregarProveedor()">Agregar</button>
   </div>
 
-  <!-- Tabla -->
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let p of proveedoresFiltrados">
-        <td>{{ p.idProveedor }}</td>
-        <td>
-          <ng-container *ngIf="editando !== p.idProveedor; else editMode">
-            {{ p.nombre }}
-          </ng-container>
-          <ng-template #editMode>
-            <input [(ngModel)]="nombreEditado" />
-          </ng-template>
-        </td>
-        <td>
-          <ng-container *ngIf="editando !== p.idProveedor; else buttonsEdit">
-            <button (click)="iniciarEdicion(p)">Editar</button>
-            <button (click)="eliminarProveedor(p.idProveedor)">Eliminar</button>
-          </ng-container>
-          <ng-template #buttonsEdit>
-            <button (click)="guardarEdicion(p.idProveedor)">Guardar</button>
-            <button (click)="cancelarEdicion()">Cancelar</button>
-          </ng-template>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <!-- Tabla de proveedores -->
+  <div class="table-responsive">
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (p of proveedoresFiltrados; track p.idProveedor) {
+          <tr>
+            <td>{{ p.idProveedor }}</td>
+
+            <!-- Nombre -->
+            @if (editando !== p.idProveedor) {
+              <td>{{ p.nombre }}</td>
+            } @else {
+              <td><input [(ngModel)]="nombreEditado" /></td>
+            }
+
+            <!-- Acciones -->
+            @if (editando !== p.idProveedor) {
+              <td>
+                <button class="btn-edit" (click)="iniciarEdicion(p)">Editar</button>
+                <button class="btn-delete" (click)="eliminarProveedor(p.idProveedor)">Eliminar</button>
+              </td>
+            } @else {
+              <td>
+                <button class="btn-save" (click)="guardarEdicion(p.idProveedor)">Guardar</button>
+                <button class="btn-cancel" (click)="cancelarEdicion()">Cancelar</button>
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
 </div>

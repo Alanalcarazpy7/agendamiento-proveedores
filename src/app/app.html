@@ -1,14 +1,41 @@
-<nav class="navbar">
-  <ul>
-    <li><a routerLink="/proveedores" routerLinkActive="active">Proveedores</a></li>
-    <li><a routerLink="/productos" routerLinkActive="active">Productos</a></li>
-    <li><a routerLink="/jaulas" routerLinkActive="active">Jaulas</a></li>
-    <li><a routerLink="/reservas" routerLinkActive="active">Reservas</a></li>
-    <li><a routerLink="/turnos-agendados" routerLinkActive="active">Turnos Agendados</a></li>
-  </ul>
+<nav class="navbar-flat">
+  <div class="navbar-container">
+    <div class="navbar-logo">
+      <span>Gestión TP</span>
+    </div>
+
+    <ul class="navbar-links">
+      <li>
+        <a routerLink="/proveedores" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+          Proveedores
+        </a>
+      </li>
+      <li>
+        <a routerLink="/productos" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+          Productos
+        </a>
+      </li>
+      <li>
+        <a routerLink="/jaulas" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+          Jaulas
+        </a>
+      </li>
+      <li>
+        <a routerLink="/reservas" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+          Reservas
+        </a>
+      </li>
+      <li>
+        <a routerLink="/turnos-agendados" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+          Turnos Agendados
+        </a>
+      </li>
+    </ul>
+
+    <button class="navbar-toggle" (click)="toggleMenu()">☰</button>
+  </div>
 </nav>
 
-<!-- Aquí se cargan las páginas según la ruta -->
 <main class="content">
   <router-outlet></router-outlet>
 </main>

@@ -1,85 +1,151 @@
-/* Fondo de toda la página */
-body {
-  background-color: #f8f9fa; /* gris muy claro */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* ocupa toda la pantalla */
-  margin: 0;
-}
-.content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-.text-reserva{
-  color: rgb(0, 0, 0);
-  text-align: center;
-  margin-top: 20px;
-  font-weight: bold;
-} 
-
-.form-label {
-  margin: 10px;
-  font-weight: bold;
-  color: #333;
-}
-/* Contenedor del formulario */
-.custom-form {
-  background-color: #fff; /* blanco */
-  border-radius: 20px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-  padding: 30px;
-  width: 500px;   /* ancho fijo */
-  height: 500px;  /* alto fijo (mismo que ancho) */
+/* Contenedor principal */
+.container-fluid {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100vh;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f8f9fa;
 }
 
 /* Título */
-.custom-form h2 {
+.text-reserva {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 30px;
   text-align: center;
-  font-weight: bold;
-  margin-bottom: 20px;
+  color: #1f2937; /* mismo color que proveedores */
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Formulario */
+.custom-form {
+  width: 600px;
+  background: #f3f4f6; /* mismo que add-card */
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15); /* sombra suave */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: transform 0.3s;
+}
+
+.custom-form:hover {
+  transform: translateY(-5px);
+}
+
+/* Labels */
+.custom-form .form-label {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 5px;
+  display: block;
+  color: #1f2937;
 }
 
 /* Inputs y selects */
 .custom-form .form-control,
 .custom-form .form-select {
-  border-radius: 10px;
-  padding: 10px;
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 1rem;
+  border-radius: 8px; /* igual que proveedores */
   border: 1px solid #ccc;
+  transition: all 0.3s;
+}
+#cantidad0{
+  width: auto !important;
 }
 
 .custom-form .form-control:focus,
 .custom-form .form-select:focus {
-  border-color: #2a9d8f;
-  box-shadow: 0 0 5px rgba(42,157,143,0.4);
+  border-color: #2563eb; /* mismo azul que proveedores */
+  box-shadow: 0 0 5px rgba(37, 99, 235, 0.5);
+  outline: none;
 }
 
-/* Botones */
+/* Botones generales */
 .custom-form .btn {
-  border-radius: 10px;
-  font-weight: bold;
-  padding: 10px;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
-.custom-form .btn-primary {
-  background-color: #2a9d8f;
+/* Botones específicos con colores de proveedores */
+.btn-primary {
+  background-color: #2563eb; /* azul proveedores */
+  color: white;
   border: none;
 }
 
-.custom-form .btn-primary:hover {
-  background-color: #23827c;
+.btn-primary:hover {
+  background-color: #1d4ed8;
+  box-shadow: 0 6px 12px rgba(29, 78, 216, 0.3);
 }
 
-.custom-form .btn-secondary {
-  background-color: #6c757d;
+.btn-secondary {
+  background-color: #6b7280; /* gris proveedores */
+  color: white;
   border: none;
 }
 
-.custom-form .btn-secondary:hover {
-  background-color: #5a6268;
+.btn-secondary:hover {
+  background-color: #4b5563;
+  box-shadow: 0 6px 12px rgba(75, 85, 99, 0.3);
+}
+
+.btn-delete {
+  background-color: #ef4444; /* rojo proveedores */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+}
+
+.btn-delete:hover {
+  background-color: #dc2626;
+  box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3);
+}
+
+/* Detalles dinámicos */
+.custom-detail-section {
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* similar a add-card */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.3s;
+}
+
+.custom-detail-section:hover {
+  transform: translateY(-3px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .custom-form {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .custom-form .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .custom-form {
+    padding: 15px;
+  }
+
+  .custom-detail-section {
+    padding: 10px;
+  }
 }
